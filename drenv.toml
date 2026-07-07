@@ -1,0 +1,9 @@
+[package]
+name = "dragon_input"
+root = "lib"
+entrypoint = "dragon_input.rb"
+version = "0.1.0"
+
+# Ship the bundled glyph art as an asset (drenv >= 0.13). drenv copies these
+# repo-relative paths to mygame/vendor/dragon_input/<path> alongside the code.
+include = ["sprites"]

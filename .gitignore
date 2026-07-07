@@ -1,0 +1,58 @@
+.DS_Store
+
+# Runtime-generated
+tmp/
+logs/
+builds/
+
+# The bundled glyph art (CC0 Kenney Input Prompts) under
+# sprites/dragon_input/glyphs IS committed — it ships to consumers as a drenv
+# asset (see `include` in drenv.toml). Regenerate with tools/import_kenney_glyphs.rb.
+
+# ---------------------------------------------------------------------------
+# demo/ is a local DragonRuby engine checkout. Commit only the mygame game code;
+# the engine is licensed per-developer and provided by the local install.
+# ---------------------------------------------------------------------------
+
+# Engine binaries
+demo/dragonruby
+demo/dragonruby.exe
+demo/dragonruby-publish
+demo/dragonruby-publish.exe
+demo/dragonruby-bind
+demo/dragonruby-bind.exe
+demo/dragonruby-httpd
+demo/dragonruby-ios.app/
+demo/dragonruby-ios-simulator.app/
+demo/ffmpeg
+
+# Engine-provided files (from the DragonRuby install, not the project)
+demo/CHANGELOG-CURR.txt
+demo/CHANGELOG-PREV.txt
+demo/README.txt
+demo/VERSION.txt
+demo/eula.txt
+demo/open-source-licenses.txt
+demo/ctags-emacs
+demo/ctags-vim
+demo/console-logo.png
+demo/dragonruby-controller.png
+demo/dragonruby.png
+demo/font.ttf
+
+# Engine directories
+demo/samples/
+demo/docs/
+demo/include/
+demo/.dragonruby/
+demo/.gitignore
+demo/tmp/
+demo/logs/
+demo/builds/
+demo/mygame/errors/
+
+# Unused DragonRuby template sample sprites (the demo uses vendored glyphs)
+demo/mygame/sprites/
+
+# drenv-vendored dependencies are reproducible from drenv.lock; drenv writes its
+# own vendor/.gitignore, so the copies are never committed.
