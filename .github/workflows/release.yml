@@ -13,11 +13,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Cache mruby-patched
         id: cache-mruby
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tmp/mruby
           key: mruby-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('script/build-mruby.sh') }}

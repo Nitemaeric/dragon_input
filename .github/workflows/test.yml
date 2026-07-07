@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # The suite runs under DragonRuby's mruby-patched (the real runtime), not
       # MRI, so it catches mruby-only issues. The built binary only changes when
@@ -17,7 +17,7 @@ jobs:
       # file; the binary isn't portable, hence runner.os/arch in the key.
       - name: Cache mruby-patched
         id: cache-mruby
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: tmp/mruby
           key: mruby-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('script/build-mruby.sh') }}
