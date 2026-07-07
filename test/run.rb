@@ -1,16 +1,8 @@
-# Standalone smoke tests, runnable under plain MRI:  ruby test/run.rb
-# Loads the library files directly (bypassing the DragonRuby-style requires in
-# lib/dragon_input.rb) and exercises the pure-logic + Ruby-backend paths with
-# fake input objects.
-
-here = File.expand_path(File.dirname(__FILE__))
-root = File.expand_path('..', here)
-
-%w[
-  version config storage backend glyphs rebind ruby_backend steam_backend iga
-].each { |f| require File.join(root, 'lib', 'dragon_input', f) }
-
-require File.join(here, 'support')
+# Smoke tests, run under DragonRuby's mruby-patched interpreter via
+# `script/test.sh`. The standalone `mruby` CLI has no `require`/`require_relative`
+# (DragonRuby provides those in-engine), so the library sub-files and test/support
+# are preloaded with `mruby -r ...` in dependency order; this script only holds
+# the assertions. See script/test.sh.
 
 def build_config
   c = DragonInput::Config.new
@@ -186,4 +178,6 @@ T.assert(vdf.include?('joystick_move'), 'analog uses joystick_move input mode')
 T.assert(vdf.include?('"#Action_Fire"'), 'fire action title token present')
 T.assert(vdf.include?('"Fire"'), 'localization has humanized Fire')
 
-exit(T.report ? 0 : 1)
+# Signal failure by raising (mruby has no Kernel#exit and exits non-zero on an
+# uncaught exception); normal completion is a passing exit 0.
+raise 'dragon_input test suite failed' unless T.report

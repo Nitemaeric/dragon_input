@@ -10,7 +10,9 @@ module DragonInput
   #   vdf = DragonInput::IGA.generate(config)
   #   $gtk.write_file('game_actions_480.vdf', vdf)   # (in DragonRuby)
   module IGA
-    module_function
+    # extend self (not the bare `module_function` directive, whose no-arg form
+    # doesn't carry to later defs in mruby) so these are callable as IGA.*.
+    extend self
 
     def generate(config)
       tokens = {}
@@ -81,15 +83,15 @@ module DragonInput
     # Minimal VDF / KeyValues serializer. Emits tab-indented nested blocks with
     # quoted keys and string values — the shape Steam expects for IGA files.
     module VDF
-      module_function
+      extend self
 
       def dump(hash)
-        +'' << render(hash, 0)
+        render(hash, 0)
       end
 
       def render(hash, depth)
         indent = "\t" * depth
-        out = +''
+        out = ''
         hash.each do |key, value|
           if value.is_a?(Hash)
             out << "#{indent}\"#{escape(key)}\"\n#{indent}{\n"

@@ -387,79 +387,45 @@ module DragonInput
 
     # ---- Persistence ----------------------------------------------------
 
+    # Overrides persist as tab-separated lines: "set<TAB>action<TAB>source<TAB>
+    # binding". No JSON or $gtk dependency, so the same code runs in DragonRuby's
+    # mruby, the engine, and the test harness. Bindings are always plain symbols.
     def load_overrides
       raw = @storage.read(BINDINGS_FILE)
       return {} unless raw && !raw.empty?
 
-      parsed = parse_json(raw)
-      return {} unless parsed.is_a?(Hash)
-
-      symbolize_overrides(parsed)
+      deserialize_overrides(raw)
     rescue StandardError
       {}
     end
 
     def save_overrides
-      @storage.write(BINDINGS_FILE, encode_json(stringify_overrides(@overrides)))
+      @storage.write(BINDINGS_FILE, serialize_overrides(@overrides))
     end
 
-    # Read JSON through $gtk in DragonRuby, else the stdlib (tests run on MRI).
-    def parse_json(str)
-      if $gtk
-        $gtk.parse_json(str)
-      else
-        require 'json'
-        JSON.parse(str)
-      end
-    end
-
-    # Minimal JSON writer. mruby has no bundled `json` gem and no core #to_json,
-    # so we encode by hand. The overrides tree is only nested Hashes of strings.
-    def encode_json(obj)
-      case obj
-      when Hash
-        '{' + obj.map { |k, v| "#{encode_json(k.to_s)}:#{encode_json(v)}" }.join(',') + '}'
-      when Array
-        '[' + obj.map { |v| encode_json(v) }.join(',') + ']'
-      when nil
-        'null'
-      when true, false
-        obj.to_s
-      when Numeric
-        obj.to_s
-      else
-        '"' + obj.to_s.gsub('\\', '\\\\\\\\').gsub('"', '\\"') + '"'
-      end
-    end
-
-    def symbolize_overrides(hash)
-      out = {}
-      hash.each do |set, actions|
-        out[set.to_sym] = {}
+    def serialize_overrides(overrides)
+      lines = []
+      overrides.each do |set, actions|
         actions.each do |action, sources|
-          out[set.to_sym][action.to_sym] = {}
           sources.each do |src_type, binding|
-            out[set.to_sym][action.to_sym][src_type.to_sym] = symbolize_binding(binding)
+            lines << "#{set}\t#{action}\t#{src_type}\t#{binding}"
           end
         end
       end
-      out
+      lines.join("\n")
     end
 
-    def symbolize_binding(binding)
-      binding.is_a?(String) ? binding.to_sym : binding
-    end
-
-    def stringify_overrides(hash)
+    def deserialize_overrides(raw)
       out = {}
-      hash.each do |set, actions|
-        out[set.to_s] = {}
-        actions.each do |action, sources|
-          out[set.to_s][action.to_s] = {}
-          sources.each do |src_type, binding|
-            out[set.to_s][action.to_s][src_type.to_s] = binding.to_s
-          end
-        end
+      raw.split("\n").each do |line|
+        next if line.empty?
+
+        set, action, src_type, binding = line.split("\t")
+        next unless set && action && src_type && binding
+
+        out[set.to_sym] ||= {}
+        out[set.to_sym][action.to_sym] ||= {}
+        out[set.to_sym][action.to_sym][src_type.to_sym] = binding.to_sym
       end
       out
     end

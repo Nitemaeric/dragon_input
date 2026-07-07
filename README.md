@@ -194,12 +194,18 @@ this repo is complete and useful on its own without it.
 
 ## Development
 
-Pure-logic and Ruby-backend behavior are covered by a plain-MRI smoke suite that
-fakes `args` (no engine needed):
+The library's logic and Ruby backend are covered by a smoke suite that fakes
+`args` and runs under **DragonRuby's mruby-patched** interpreter (the real
+runtime — so it catches mruby-only issues MRI would miss), no engine binary
+needed:
 
 ```
-ruby test/run.rb
+script/test.sh
 ```
+
+It builds `DragonRuby/mruby-patched` once (pinned commit, cached under `tmp/`),
+then preloads the library + test support and runs `test/run.rb`. CI runs the
+same on every push/PR.
 
 ## Status
 

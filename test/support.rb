@@ -1,6 +1,6 @@
-# Fake DragonRuby input objects so the library can be exercised under plain MRI
-# (or mruby) without the engine. Only the surface the Ruby backend reads is
-# modeled.
+# Fake DragonRuby input objects so the library can be exercised under
+# DragonRuby's mruby-patched (see script/test.sh) without the engine. Only the
+# surface the Ruby backend reads is modeled.
 
 # A group like key_down / key_held / key_up: responds truthily to any button
 # name it was told is active.
