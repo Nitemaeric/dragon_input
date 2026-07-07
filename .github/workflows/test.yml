@@ -1,0 +1,21 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The library targets DragonRuby's mruby, but its logic + Ruby backend are
+      # exercised by a plain-MRI smoke suite (no gems, stdlib only).
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Run tests
+        run: ruby test/run.rb
