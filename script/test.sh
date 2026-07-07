@@ -14,9 +14,15 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-MRUBY="$ROOT/tmp/mruby/bin/mruby"
-if [ ! -x "$MRUBY" ]; then
-  "$ROOT/script/build-mruby.sh"
+# Use an mruby provided by the environment (CI supplies one via the
+# Nitemaeric/setup-dragonruby-mruby action, on PATH) before building our own.
+if [ -n "${MRUBY:-}" ]; then
+  :
+elif command -v mruby >/dev/null 2>&1; then
+  MRUBY="$(command -v mruby)"
+else
+  MRUBY="$ROOT/tmp/mruby/bin/mruby"
+  [ -x "$MRUBY" ] || "$ROOT/script/build-mruby.sh"
 fi
 
 # Order mirrors lib/dragon_input.rb (support last so it can reference nothing).
