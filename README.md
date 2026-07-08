@@ -78,7 +78,7 @@ Game code only ever touches this facade.
 
 | Call | Does |
 | --- | --- |
-| `DragonInput.setup(config) { |c| ... }` | Configure action sets, pick a backend (graceful fallback). |
+| `DragonInput.setup(config) { \|c\| ... }` | Configure action sets, pick a backend (graceful fallback). |
 | `DragonInput.tick(args)` | Pump the active backend each frame. |
 | `DragonInput.pressed?(pad, :fire)` | Digital action currently on → bool. |
 | `DragonInput.just_pressed?(pad, :fire)` | Pressed this tick only (edge). |
