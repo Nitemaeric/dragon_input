@@ -56,6 +56,9 @@ end
 
 ## Demo
 
+**▶ Try it in your browser: https://nitemaeric.github.io/dragon_input/**
+(keyboard or a Gamepad-API controller — watch the prompts swap live.)
+
 A runnable DragonRuby project lives in [`demo/`](demo/mygame/app/main.rb). It has
 one thesis: **bind actions once, and the prompts follow the device you last
 touched.** Press keys or a controller (or move WASD vs the left stick) and every
