@@ -3,9 +3,9 @@
 # ==============================================
 
 # === Remove the pound sign and leading space for the properties below before publishing your game. ===
-# devid=your_itchio_username
+devid=nitemaeric
 devtitle=Nitemaeric
-# gameid=your_itchio_game_id
+gameid=dragon-input-demo
 gametitle=dragon_input demo
 version=0.1
 icon=metadata/icon.png
