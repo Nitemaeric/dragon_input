@@ -171,7 +171,8 @@ hand-maintain two mappings.
 - Library: **`dragon_input`** (reads standalone; deliberately NOT `conjuration-*`
   so it doesn't imply coupling).
 - Ruby namespace: `DragonInput` (final call TBD).
-- Steam shim package name TBD (e.g. `dragon_input-steam`).
+- Steam shim package: **`dragon_input-steam`** (scaffolded at
+  `github:Nitemaeric/dragon_input-steam`).
 
 ## Open questions / decisions to make
 
@@ -194,10 +195,12 @@ hand-maintain two mappings.
    in-game rebind screen, generic glyphs. No native code. Ship + `drenv add`.
 2. [x] **Capability surface + graceful degradation** — `supports?`, `open_rebind`
    dispatch, glyph fallback.
-3. [ ] **Steam shim (separate package)** — thin C binding over the flat API,
+3. [~] **Steam shim (separate package)** — thin C binding over the flat API,
    `dlopen`, prebuilt release binaries; `SteamBackend` detects + delegates.
-   (Ruby-side detection + delegation is done in `lib/dragon_input/steam_backend.rb`;
-   the native package is the remaining work.)
+   Ruby-side detection + delegation done in `lib/dragon_input/steam_backend.rb`.
+   Native package **scaffolded** at `github:Nitemaeric/dragon_input-steam` (C shim
+   grounded in the real `drb_api` ABI, build script, release-matrix CI template).
+   Remaining: build against the Steamworks SDK + test vs the Steam client/controller.
 4. [x] **Config → IGA generation** — one source of truth (`DragonInput.to_iga`).
 5. [ ] **Conjuration glue** — optional first-class integration.
 
