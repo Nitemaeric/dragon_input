@@ -14,7 +14,7 @@ jobs:
       # Build/cache DragonRuby's mruby-patched and put `mruby` on PATH, so the
       # suite runs under the real runtime (not MRI). Pinned so CI matches the
       # runtime script/build-mruby.sh builds locally.
-      - uses: Nitemaeric/setup-dragonruby-mruby@v1
+      - uses: Nitemaeric/setup-dragonruby-mruby-patched@v1
         with:
           mruby-sha: e670a7f80689a9298595bf4ed15f905a89781856
 

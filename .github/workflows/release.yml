@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: Nitemaeric/setup-dragonruby-mruby@v1
+      - uses: Nitemaeric/setup-dragonruby-mruby-patched@v1
         with:
           mruby-sha: e670a7f80689a9298595bf4ed15f905a89781856
 
