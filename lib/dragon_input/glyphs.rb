@@ -75,6 +75,16 @@ module DragonInput
       resolve("#{style}/#{button}.png")
     end
 
+    # Sprite path (or nil) for a raw button symbol in a style, following the same
+    # root resolution as #path. The key-level counterpart of #path, which resolves
+    # per action; keyboard cluster aliases still apply (e.g. :wasd -> :arrows).
+    def key_glyph(style, button)
+      return nil unless button
+
+      button = KEYBOARD_GLYPH_ALIASES[button] || button if style == :keyboard
+      resolve("#{style}/#{button}.png")
+    end
+
     # Text label used when no sprite art is present. Handy for a keycap fallback.
     # Uses the raw binding (not the glyph alias) so e.g. :wasd reads "WASD".
     def label(action, style)

@@ -50,6 +50,24 @@ T.eq(gl.label(move_action, :keyboard), 'WASD', 'label keeps the raw WASD text')
 T.eq(gl.device_path(:keyboard),
      'sprites/dragon_input/glyphs/device/keyboard.png', 'device icon path')
 
+puts "\nKey-level glyphs (raw button -> sprite path)"
+T.eq(gl.key_glyph(:xbox, :a), 'sprites/dragon_input/glyphs/xbox/a.png',
+     'raw controller button resolves under its style')
+T.eq(gl.key_glyph(:keyboard, :wasd), 'sprites/dragon_input/glyphs/keyboard/arrows.png',
+     'keyboard cluster alias applies (:wasd -> arrows)')
+T.eq(gl.key_glyph(:keyboard, nil), nil, 'nil button -> nil')
+# Backend + facade: a pad resolves through its current device style.
+kgb = DragonInput::RubyBackend.new(build_config, storage: DragonInput::Storage::Memory.new)
+T.eq(kgb.key_glyph(:one, :space), 'sprites/dragon_input/glyphs/keyboard/space.png',
+     'pad resolves via its device style (keyboard by default)')
+kargs = FakeArgs.new
+kargs.inputs.controller_one = FakeController.new(down: [:a], held: [:a])
+kgb.tick(kargs)
+T.eq(kgb.key_glyph(:one, :a), 'sprites/dragon_input/glyphs/xbox/a.png',
+     'after controller input the pad resolves in the controller style')
+T.eq(kgb.key_glyph(:xbox, :b), 'sprites/dragon_input/glyphs/xbox/b.png',
+     'an explicit style bypasses device detection')
+
 puts "\nRuby backend — digital reads"
 backend = DragonInput::RubyBackend.new(build_config, storage: DragonInput::Storage::Memory.new)
 args = FakeArgs.new

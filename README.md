@@ -88,6 +88,7 @@ Game code only ever touches this facade.
 | `DragonInput.just_released?(pad, :fire)` | Released this tick only (edge). |
 | `DragonInput.axis(pad, :move)` | Analog → `{ x:, y:, active: }` in `[-1, 1]`. |
 | `DragonInput.glyph(pad, :fire)` | Sprite path for the action, in the pad's current device style. |
+| `DragonInput.key_glyph(pad_or_style, :a)` | Sprite path (or nil) for a *raw button* symbol — the key-level counterpart of `glyph`. Pass a style (`:xbox`/`:keyboard`/…) or a pad (resolved to its current device style). |
 | `DragonInput.glyph_style(pad)` | Device-aware style the prompts should use — `:keyboard` / `:xbox` / `:playstation` / `:switch`, following the last device the player used. |
 | `DragonInput.render_glyph(args, pad, :fire, rect)` | Draw the glyph (sprite, or a keycap fallback) into `rect`. |
 | `DragonInput.device_glyph(pad)` / `render_device_glyph(args, pad, rect)` | Whole-device icon for the current device (keyboard / controller brand). |

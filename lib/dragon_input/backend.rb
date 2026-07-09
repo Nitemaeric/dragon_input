@@ -27,6 +27,10 @@ module DragonInput
       raise NotImplementedError
     end
 
+    def key_glyph(_pad_or_style, _button)
+      raise NotImplementedError
+    end
+
     def rumble(_pad, _low_freq, _high_freq)
       raise NotImplementedError
     end

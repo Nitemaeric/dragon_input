@@ -117,6 +117,14 @@ module DragonInput
       @glyphs.path(pad, action, active_style(pad), self)
     end
 
+    # Sprite path (or nil) for a raw button symbol, in an explicit style
+    # (:xbox/:playstation/:switch/:keyboard) or a pad's current device style —
+    # the key-level counterpart of #glyph.
+    def key_glyph(pad_or_style, button)
+      style = Glyphs::STYLES.include?(pad_or_style) ? pad_or_style : active_style(pad_or_style)
+      @glyphs.key_glyph(style, button)
+    end
+
     # Style to draw prompts in for a pad, following the *last device the player
     # used*: :keyboard when they last used keyboard/mouse, else the detected
     # controller style (:xbox/:playstation/:switch). This is what makes prompts

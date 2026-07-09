@@ -103,6 +103,14 @@ module DragonInput
       @backend.glyph_style(pad)
     end
 
+    # Sprite path (or nil) for a raw button symbol's glyph, in an explicit style
+    # (:xbox/:playstation/:switch/:keyboard) or a pad's current device style. The
+    # key-level counterpart of #glyph, which resolves per action.
+    def key_glyph(pad_or_style, button)
+      ensure_setup!
+      @backend.key_glyph(pad_or_style, button)
+    end
+
     # Convenience: draw an action's glyph into `rect` ({ x:, y:, w:, h: }),
     # using the sprite when the art exists and a drawn keycap fallback otherwise.
     def render_glyph(args, pad, action, rect)

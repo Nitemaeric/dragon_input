@@ -109,6 +109,12 @@ module DragonInput
       :steam
     end
 
+    # Steam glyphs are per-action origins; there's no bundled per-button art to
+    # resolve from a raw symbol, so the key-level lookup is unavailable here.
+    def key_glyph(_pad_or_style, _button)
+      nil
+    end
+
     def render_glyph(args, pad, action_name, rect)
       path = glyph(pad, action_name)
       args.outputs.sprites << rect.merge(path: path) if path
